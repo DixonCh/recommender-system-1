@@ -12,7 +12,7 @@
 		public function q($st, $binder = 0, $binders = 0) {
 			try {
 				$this->stmt = $this->conn->prepare($st);
-				
+
 				if($binder > 0) {
 					foreach(array_keys($binders) as $binder) {
 						$this->stmt->bindParam($binder, $binders[$binder]);
@@ -28,5 +28,22 @@
 
 		}
 
+		public function q_with_array($query, $ids) {
+			$in = join(',', array_fill(0, count($ids), '?'));
+
+			$bindarray = array(1 => $ids[0]);
+
+			for($i=1;$i<count($ids);$i++) {
+				$bindarray[] = $ids[$i];
+			}
+
+			$genre = $this->q($query . "(" . $in . ")", count($ids), $bindarray);
+
+			return $genre;
+		}
+
+		function __destruct() {
+        	$this->conn = null;
+    	}
 	}
 ?>
