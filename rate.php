@@ -6,8 +6,13 @@
 	if(empty($_POST)) {
 		redirect();
 	} else {
-		//session (for ajax requests)
-		$dbel = new DBel();
-		$result = $dbel->q("INSERT INTO user_ratings (id,userid,movieid,rating) VALUES (1,1,:fid,:r) ON DUPLICATE KEY UPDATE rating = :rating", 3, array(":fid"=>$_POST["fid"], ":r"=>$_POST["r"], ":rating"=>$_POST["r"]));
+		if(!empty($_SESSION["usrid"])) {
+			$usrid = $_SESSION["usrid"];
+			$dbel = new DBel();
+			$rdid = ($_POST["rtid"] === 0)? NULL : $_POST["rtid"]; 
+			$result = $dbel->q("INSERT INTO user_ratings (id,userid,movieid,rating) VALUES (:rt, :usrid,:fid,:r) ON DUPLICATE KEY UPDATE rating = :rating", 5, array(":rt"=>$rdid, ":usrid" => $usrid, ":fid"=>$_POST["fid"], ":r"=>$_POST["r"], ":rating"=>$_POST["r"]));
+		} else {
+			echo ("Sign up and start rating!");
+		}
 	}
 ?>

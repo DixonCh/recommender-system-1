@@ -1,37 +1,54 @@
 body {
-	font-family: Roboto, Helvetica, Arial;
-	margin:3vw;
+    font-family: Roboto, Helvetica, Arial;
+    min-height: 100%;
+    margin: 3vw;
 }
 
-form {
-	font-size:15px;
+#login {
+    display: inline-block;
+    text-align: left;
+    margin-top: 13%;
+}
+
+#login .input {
+    font-weight: 545;
+    font-size:16px;
+    padding:9px;
+    width:15em;
+    border-radius:1.5px;
+    border:0.9px solid #999;
+}
+
+#login label {
+    line-height: 1.8em;
+    font-weight: 545;
+    font-size:15px;
+}
+
+#login [type="submit"] {
+    padding:6px;
+    width:13em;
+    font-size:15px;
+    margin-top:9px;
 }
 
 .head {
-	font-size:18px;
-}
-
-form input {
-	margin:3px;
-}
-
-form fieldset {
-	border: none;
+    font-size:18px;
 }
 
 label {
-	font-size: 14px;
-	cursor: pointer;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 p{
-  margin  : 0 0 1.5em;
-  padding : 5px 0 5px 0;
+    margin  : 0 0 1.5em;
+    padding : 5px 0 5px 0;
 }
 
 a{
-  color           : #9c3;
-  text-decoration : none;
+    color           : #9c3;
+    text-decoration : none;
 }
 
 span.stars, span.stars span {
@@ -39,6 +56,7 @@ span.stars, span.stars span {
     background: url("stars.png") 0 -16.4px repeat-x;
     width: 80px;
     height: 16px;
+    margin:0;
 }
 
 span.stars span {
@@ -47,7 +65,7 @@ span.stars span {
 
 .user-rating {
     position:absolute;
-    left:305px;
+    left:300px;
     top: 0px;
 }
 
@@ -65,4 +83,8 @@ span.stars span {
 
 .title {
     width:285px;
+}
+
+#header {
+    margin-top:30px;
 }

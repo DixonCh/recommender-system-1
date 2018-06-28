@@ -1,10 +1,11 @@
-function sr(a, b){
+function sr(a, b, c){
 	fetch('rate.php', {
 	  method: 'post',
 	  headers: {
 	    'Accept': 'application/json',
 	    'Content-Type': 'application/json'
 	  },
-	  body: JSON.stringify({fid: a.substr(4), r: b})
-	});
+	  credentials: 'include',
+	  body: JSON.stringify({rtid: a, fid: b.substr(4), r: c})
+	}).then(res => res.text()).then(data => console.log(data));
 }
