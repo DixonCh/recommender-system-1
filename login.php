@@ -23,5 +23,5 @@
 
 	$f = new formMaker();
 
-	echo $f->create("login", array("POST", "login"));
+	echo $f->create("login", array("POST", "login.php"));
 ?>

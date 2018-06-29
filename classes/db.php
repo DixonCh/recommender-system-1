@@ -9,7 +9,7 @@
 			$this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		}
 
-		public function q($st, $binder = 0, $binders = 0) {
+		public function q($st, $binder = 0, $binders = 0, $return_success = 0) {
 			try {
 				$this->stmt = $this->conn->prepare($st);
 
@@ -18,10 +18,17 @@
 						$this->stmt->bindParam($binder, $binders[$binder]);
 					}
 				}
-				
-				$this->stmt->execute();
+
+				$success = 0;
+
+				if($this->stmt->execute()) { $success = 1;}
+
 			    $this->stmt->setFetchMode(PDO::FETCH_ASSOC); 
-			    return $this->stmt->fetchAll();
+			    if($return_success == 1) {
+			    	return array($this->stmt->fetchAll(), $success);
+			    } else {
+			    	return $this->stmt->fetchAll();
+			    }
 			} catch(PDOException $e) {
 	   			echo "Error: " . $e->getMessage();
 			}

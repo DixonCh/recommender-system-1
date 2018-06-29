@@ -4,13 +4,13 @@ body {
     margin: 3vw;
 }
 
-#login {
+form {
     display: inline-block;
     text-align: left;
     margin-top: 13%;
 }
 
-#login .input {
+form .input {
     font-weight: 545;
     font-size:16px;
     padding:9px;
@@ -19,13 +19,13 @@ body {
     border:0.9px solid #999;
 }
 
-#login label {
+form label {
     line-height: 1.8em;
     font-weight: 545;
     font-size:15px;
 }
 
-#login [type="submit"] {
+form [type="submit"] {
     padding:6px;
     width:13em;
     font-size:15px;

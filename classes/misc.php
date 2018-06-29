@@ -53,6 +53,16 @@
 				$form .= <<<EOT
 <label>Username:</label><div><input type="" name="username" class="input"></div><label>Password:</label><div><input type="password" name="password" class="input" class=""></div><div style="text-align:center;"><input type="submit" name="submitbtn" value="Sign in"></div></form></div>
 EOT;
+			} elseif($what == "register") {
+				$form .= <<<EOT
+<label>First Name:</label><div><input type="" name="fname" class="input"></div>
+<label>Last Name:</label><div><input type="" name="lname" class="input"></div>
+<label>Username:</label><div><input type="" name="username" class="input"></div>
+<label>Email</label><div><input type="email" name="email" class="input"></div>
+<label>Password:</label><div>
+<input type="password" name="password" class="input"></div>
+<div style="text-align:center;"><input type="submit" name="submitbtn" value="Sign up"></div></form></div>
+EOT;
 			}
 
 			return $form;
