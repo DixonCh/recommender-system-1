@@ -8,7 +8,7 @@
 		$db = new DBel();
 		$check = $db->q("SELECT id,firstname,lastname FROM users WHERE username = :u AND password = :p", 2, array(":u"=>$username, ":p"=>$password));
 		if(count($check) === 1) {
-			$_SESSION["usrid"] = $check[0]["id"]; 
+			$_SESSION["usrid"] = $check[0]["id"];
 			$_SESSION["fname"] = $check[0]["firstname"]; 
 			$_SESSION["lname"] = $check[0]["lastname"]; 
 

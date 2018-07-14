@@ -5,6 +5,8 @@
 	define ("D", "recommender");
 
 	session_start();
+	
+	$user = (empty($_SESSION["usrid"]))? 0:1;
 
 	require_once("classes/db.php");
 	require_once("classes/misc.php");

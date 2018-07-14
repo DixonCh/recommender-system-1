@@ -35,8 +35,13 @@
 
 		}
 
-		public function q_with_array($query, $ids) {
+		public function q_with_array($query, $ids, $orderby = "") {
 			$in = join(',', array_fill(0, count($ids), '?'));
+
+			$order_clause = "";
+			if(!empty($orderby)) {
+				$order_clause = " ORDER BY FIND_IN_SET(". $orderby .", '".join(',',$ids)."')";
+			}
 
 			$bindarray = array(1 => $ids[0]);
 
@@ -44,7 +49,7 @@
 				$bindarray[] = $ids[$i];
 			}
 
-			$genre = $this->q($query . "(" . $in . ")", count($ids), $bindarray);
+			$genre = $this->q($query . "(" . $in . ")" . $order_clause, count($ids), $bindarray);
 
 			return $genre;
 		}
