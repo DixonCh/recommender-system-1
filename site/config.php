@@ -1,5 +1,5 @@
 <?php
-	define ("A", "db4free.net");
+	define ("A", "85.10.205.173:3306");
 	define ("B", "sharad46");
 	define ("C", "Xci45tsa_");
 	define ("D", "recommender");
