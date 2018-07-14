@@ -10,7 +10,7 @@
  	$f = $dbel->q("SELECT * FROM films LIMIT :nu", 2, array(":nu" => $n));
 
  	if(!empty($f)) {
-?><div id="wrapper"><div id="content"><div id="header"><div class="head">Head</div><br><div>Showing <?php echo($n); ?> Movies &middot; <a href="?i=50">50</a> &middot; <a href="?i=100">100</a> &middot; <a href="?i=200">200</a> &middot; <a href="?i=500">500</a> &middot; <a href="?i=1000">1000</a> <?php if(!empty($usrid)) {?>&middot; <a href="profile">My Ratings</a> &middot; <a href="login.php?out">Logout</a> <?php } ?></div></div><div id="list"><?php
+?><div id="wrapper"><div id="content"><div id="header"><div class="head">Head</div><br><div>Showing <?php echo($n); ?> Movies &middot; <a href="?i=50">50</a> &middot; <a href="?i=100">100</a> &middot; <a href="?i=200">200</a> &middot; <a href="?i=500">500</a> &middot; <a href="?i=1000">1000</a> <?php if(!empty($usrid)) {?>&middot; <a href="profile.php">My Ratings</a> &middot; <a href="login.php?out">Logout</a> <?php } ?></div></div><div id="list"><?php
 		$user_ratings = prepareFilmList($f);
 		// if(isset($usrid)) {
 		// 	$recommendations = recommend();
