@@ -6,7 +6,11 @@
 	define ("A", "sql12.freesqldatabase.com");
 	define ("B", "sql12247654");
 	define ("C", "Ptw6aicQFD");
-	define ("D", "sql12247654");
+	define ("D", "sql12247654");	
+	// define ("A", "localhost");
+	// define ("B", "root");
+	// define ("C", "");
+	// define ("D", "recommender");
 
 	session_start();
 	

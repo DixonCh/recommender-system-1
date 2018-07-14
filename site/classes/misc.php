@@ -151,10 +151,13 @@ EOT;
 		$command .= " 2>&1";
 
 		$output = shell_exec($command);
-		if($output[0] == "[") {
+		print($output);
+		if($output[0] == "[" && !empty($output)) {
 			$filtered = explode("], [", substr($output, 2, -3));
 
 			$predictions = array();
+
+			print_r($filtered);
 
 			foreach($filtered as $fi) {
 				$pr = explode(",", $fi);
