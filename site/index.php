@@ -6,7 +6,7 @@
  
  	$dbel = new DBel();
  	
-	$n = (isset($_GET["i"]))? $_GET["i"] : 10;
+	$n = (isset($_GET["i"]))? $_GET["i"] : 250;
  	$f = $dbel->q("SELECT * FROM films LIMIT :nu", 2, array(":nu" => $n));
 
  	if(!empty($f)) {
