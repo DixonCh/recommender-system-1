@@ -1,7 +1,7 @@
 <?php
-	define ("A", "localhost");
-	define ("B", "root");
-	define ("C", "");
+	define ("A", "db4free.net");
+	define ("B", "sharad46");
+	define ("C", "Xci45tsa_");
 	define ("D", "recommender");
 
 	session_start();
