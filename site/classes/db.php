@@ -4,7 +4,7 @@
 		private $stmt;
 
 		function __construct(){
-			$this->conn = new PDO("mysql:host=".A.";dbname=".D.";charset=utf8", B, C);
+			$this->conn = new PDO("mysql:host=".A.";dbname=".D.";charset=utf8mb4;", B, C);
 			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		}
