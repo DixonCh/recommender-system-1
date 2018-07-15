@@ -1,12 +1,12 @@
 <?php
-	// define ("A", "db4free.net");
-	// define ("B", "sharad46");
-	// define ("C", "Xci45tsa_");
-	// define ("D", "recommender");
-	define ("A", "sql12.freesqldatabase.com");
-	define ("B", "sql12247654");
-	define ("C", "Ptw6aicQFD");
-	define ("D", "sql12247654");	
+	define ("A", "db4free.net:3306");
+	define ("B", "sharad46");
+	define ("C", "Xci45tsa_");
+	define ("D", "recommender");
+	// define ("A", "sql12.freesqldatabase.com");
+	// define ("B", "sql12247654");
+	// define ("C", "Ptw6aicQFD");
+	// define ("D", "sql12247654");	
 	// define ("A", "localhost");
 	// define ("B", "root");
 	// define ("C", "");
