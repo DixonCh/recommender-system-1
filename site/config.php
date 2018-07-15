@@ -3,6 +3,8 @@
 	define ("B", "sharad46");
 	define ("C", "Xci45tsa_");
 	define ("D", "recommender");
+	echo("S");
+	print(A.B.C.D);
 	// define ("A", "sql12.freesqldatabase.com");
 	// define ("B", "sql12247654");
 	// define ("C", "Ptw6aicQFD");
