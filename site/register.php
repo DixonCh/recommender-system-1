@@ -21,4 +21,5 @@
 	$f = new formMaker();
 
 	echo $f->create("register", array("POST", "register.php"));
-?>
+?><br><div style="text-align:center">Please use generic passwords. Hashing has not yet been deployed, so they will be readable.</div>
+<?php require_once("incls/footer.php"); ?>

@@ -30,13 +30,13 @@ nav {
     margin:0px auto;
 }
 
-#login {
+#register, #login {
     display: inline-block;
     text-align: left;
-    margin-top: 13%;
+    margin-top: 2%;
 }
 
-#login .input {
+#login .input, #register .input {
     font-weight: 545;
     font-size:16px;
     padding:9px;
@@ -45,13 +45,13 @@ nav {
     border:0.9px solid #999;
 }
 
-#login label {
+#login label, #register label {
     line-height: 1.8em;
     font-weight: 545;
     font-size:15px;
 }
 
-#login [type="submit"] {
+#login [type="submit"], #register [type="submit"] {
     padding:6px;
     width:13em;
     font-size:15px;

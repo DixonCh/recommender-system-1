@@ -7,4 +7,4 @@
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	<link rel="stylesheet" type="text/css" href="rating.min.css">
 </head>
-<body><header><nav><div id="search"><form action="search" id="s" method="GET"><input id="q"><input type="submit" id="hsubmit" value="GO"></form></div></nav></header>
+<body><header><nav><div id="search"><form action="search" id="s" method="GET"><input id="q"><input type="submit" id="hsubmit" value="GO"></form><?php if(empty($user)) { ?><div style="margin: 10px"><a href="login.php">Login</a> &middot; <a href="register.php">Register</a></div><?php } ?></div></nav></header>

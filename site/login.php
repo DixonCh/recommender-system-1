@@ -24,4 +24,5 @@
 	$f = new formMaker();
 
 	echo $f->create("login", array("POST", "login.php"));
+	require_once("incls/footer.php");
 ?>
