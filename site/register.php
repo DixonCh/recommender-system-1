@@ -6,7 +6,8 @@
 
 		$treated = array();
 		foreach($formelems as $elem) {
-			$treated[$elem] = htmlentities(preg_replace('/\s\s+/', ' ', ($_POST[$elem])));
+			$field = $_POST[$elem];
+			$treated[$elem] = (!empty($field))? htmlentities(preg_replace('/\s\s+/', ' ', ($field))) : NULL;
 		}
 
 		$db = new DBel();
@@ -21,5 +22,5 @@
 	$f = new formMaker();
 
 	echo $f->create("register", array("POST", "register.php"));
-?><br><div style="text-align:center">Please use generic passwords. Hashing has not yet been deployed, so they will be readable.</div>
+?><br><div style="text-align:center">Use really generic passwords. Hashing has not yet been deployed, so passwords will be readable.</div>
 <?php require_once("incls/footer.php"); ?>
