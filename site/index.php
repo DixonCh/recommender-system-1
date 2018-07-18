@@ -6,23 +6,18 @@
  
  	$dbel = new DBel();
  	
-	$n = (isset($_GET["i"]))? $_GET["i"] : 250;
- 	$films = $dbel->q("SELECT * FROM films LIMIT :nu", 2, array(":nu" => $n));
+	$n = (isset($_GET["i"]))? $_GET["i"] : 20;
+ 	$films = $dbel->q("SELECT * FROM films ORDER BY RAND() LIMIT :nu", 2, array(":nu" => $n));
+
+ 	$user = (!empty($user))? $dbel->q("SELECT username FROM users WHERE id = :uid", 1, array(":uid" => $usrid)) : null;
 
  	if(!empty($films)) {
-?><div id="wrapper"><div id="content"><div id="header"><div class="head">Head</div><br><div>Showing <?php echo($n); ?> Movies &middot; <a href="?i=50">50</a> &middot; <a href="?i=100">100</a> &middot; <a href="?i=200">200</a> &middot; <a href="?i=500">500</a> &middot; <a href="?i=1000">1000</a> <?php if(!empty($usrid)) {?>&middot; <a href="profile.php">My Ratings</a> &middot; <a href="login.php?out">Logout</a> <?php } ?></div></div><div id="list"><?php
+?><div id="wrapper"><div id="content"><div id="header"><div class="head"><?php if(!empty($user)) { echo("Hi, " . $user[0]["username"] . "! Rate films you have watched:");} else {echo("Register to get started.");} ?></div><div>Showing <?php echo($n); ?> Movies &middot; <a href="?i=50">50</a> &middot; <a href="?i=100">100</a> &middot; <a href="?i=150">150</a> &middot; <a href="?i=200">250</a></div></div><div id="list"><?php
 		$user_ratings = prepareFilmList($films);
-		// if(isset($usrid)) {
-		// 	$recommendations = recommend();
-		// 	if(!empty($recommendations)) {
-		// 		$r_s = array();
-		// 		foreach($recommendations as $recommendation) {$r_s[] = $recommendation[0];}
-		// 		$r = $dbel->q_with_array("SELECT * FROM films WHERE movieid IN ", $r_s, "movieid");
-		// 	} else { echo "Start by rating films you have watched.";}
-		// }
+		// $r = get_recommendations();
  	} else {
  		echo <<<EOT
 Please <a href=".">try again</a> or check later.
 EOT;
  	}
-?><?php if(empty($user)) { echo '<div id="tscreen"><div class="modal"><span class="close">&times;</span><br><span class="message"></span> </div></div>'; } ?> </div><div id="sidebar">Recommended:<br><?php if(!empty($r)) {prepareFilmList($r); }?></div></div><script type="text/javascript">var s=[<?php echo implode(',', $user_ratings); ?>];</script><?php require_once("incls/footer.php");?> 
+?><?php if(empty($user)) { echo '<div id="tscreen"><div class="modal"><span class="close">&times;</span><br><span class="message"></span> </div></div>'; } ?> </div><div id="sidebar"><?php if(!empty($r)) {?><div class="head">Recommended:</div><div class="sidebar_list"><?php prepareFilmList($r); }?></div></div><script type="text/javascript">var s=[<?php echo implode(',', $user_ratings); ?>];</script><?php require_once("incls/footer.php");?> 

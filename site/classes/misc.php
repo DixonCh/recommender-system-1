@@ -29,13 +29,13 @@
 					$rating = array_fill_keys($fid, 0);
 
 					foreach(array_keys($r) as $r_) {
-						$rating[$r_-1] = avg($r[$r_]);
+						$rating[$r_] = avg($r[$r_]);
 					}
 					$r = $rating;
 				}
 			} elseif ($getBy == "user") {
 				$add = (!empty($uid))? "userid = " . $uid . " AND " : "";
-				$ratings = $this->db->q_with_array("SELECT movieid, rating FROM user_ratings WHERE " . $add . "movieid IN ", $fid);
+				$ratings = $this->db->q_with_array("SELECT movieid, rating FROM user_ratings WHERE " . $add . "movieid IN ", $fid, "movieid");
 
 				foreach($ratings as $rating) {
 					$r[$rating["movieid"]] = $rating["rating"];
@@ -45,8 +45,7 @@
 		}
 
 		public function getGenresByMovieIds($ids) {
-			$genre = $this->db->q_with_array("SELECT movieid, genrename FROM movie_genres JOIN movie_genre_relations USING (genreid) WHERE movieid IN ", $ids);
-
+			$genre = $this->db->q_with_array("SELECT movieid, genrename FROM movie_genres JOIN movie_genre_relations USING (genreid) WHERE movieid IN ", $ids, "movieid");
 			$genres = array();
 
 			for($i=0;$i<count($genre);$i++) {
@@ -61,7 +60,6 @@
 					$genres[$g["movieid"]] .= ", " . $g["genrename"];
 				}
 			}
-
 			return $genres;
 		}
 }
@@ -71,13 +69,13 @@
 			$form = '<div style="text-align:center;"><form id="'. $what .'" method="'.$how[0].'" action="'.$how[1].'">';
 			if($what == "login") {
 				$form .= <<<EOT
-<label>Username:</label><div><input type="" name="username" autocomplete="off" class="input"></div><label>Password:</label><div><input type="password" name="password" class="input" class=""></div><div style="text-align:center;"><input type="submit" name="submitbtn" value="Sign in"></div></form></div>
+<label>Username:</label><div><input name="username" autocomplete="off" class="input"></div><label>Password:</label><div><input type="password" name="password" class="input" class=""></div><div style="text-align:center;"><input type="submit" name="submitbtn" value="Sign in"></div></form></div>
 EOT;
 			} elseif($what == "register") {
 				$form .= <<<EOT
-<label>First Name:</label><div><input type="" name="fname" class="input"></div>
-<label>Last Name:</label><div><input type="" name="lname" class="input"></div>
-<label>Username:</label><div><input type="" name="username" class="input"></div>
+<label>First Name:</label><div><input name="fname" class="input"></div>
+<label>Last Name:</label><div><input name="lname" class="input"></div>
+<label>Username:</label><div><input name="username" class="input"></div>
 <label>Email</label><div><input type="email" name="email" class="input"></div>
 <label>Password:</label><div>
 <input type="password" name="password" class="input"></div>
@@ -91,6 +89,7 @@ EOT;
 
 	function prepareFilmList($f) {
 		$recodb = new recoDB();
+
 		$usrid = (!empty($_SESSION["usrid"]))? $_SESSION["usrid"] : null;
 		$genres = $recodb->getGenresByMovieIds(array_column($f, "movieid"));
 
@@ -108,8 +107,8 @@ EOT;
 		}
 
 		foreach(array_keys($f) as $f_) {
-		    $title = number_format((float)$stars[$f[$f_]["movieid"]-1], 2, '.', '');
-		    $width = $stars[$f[$f_]["movieid"]-1] * 16;
+		    $title = number_format((float)$stars[$f[$f_]["movieid"]], 2, '.', '');
+		    $width = $stars[$f[$f_]["movieid"]] * 16;
 		    $fid = $f[$f_]["movieid"];
 		    $original = "";
 
@@ -117,16 +116,14 @@ EOT;
 				$original = '<br>(' . $f[$f_]['originalTitle'] . ')';
 			}
 
+			//to download posters over the internet:
 			// $json = url_get_contents('http://www.omdbapi.com/?apikey=bbcbf298&i='.$f[$f_]["imdbID"]);
-
 			// $obj = json_decode($json, true);
-
 			// $img = ($obj["Poster"] != "N/A")?$obj["Poster"]:null;
 
-			$img = "";
 
 			echo <<<EOT
-<div id="ffi"><img src="{$img}"><div class="title">{$f[$f_]['primaryTitle']}{$original}</div><div class="title">{$f[$f_]['startYear']} {$genres[$fid]}</div><div class="user-rating"><span class="t">Your Rating:</span><p><span class="c-rating" name="ffi-{$f[$f_]['movieid']}"></span></p></div><div class="title"><p><span class="stars" title="{$title}"><span style="width: {$width}px;"></span></span></p></div></div>
+<div id="ffi"><div class="ffi_container"><img src="img/posters/{$f[$f_]["imdbID"]}.jpg" class="ffi_image"><div class="overlay overlayFade"><div class="text"><div class="filmtitle">{$f[$f_]['primaryTitle']}{$original}</div><div class="title">{$f[$f_]['startYear']} {$genres[$fid]}</div><div class="title"><p><span class="stars" title="{$title}"><span style="width: {$width}px;"></span></span></p></div><div class="user-rating"><span class="t">Your Rating:</span><p><span class="c-rating" name="ffi-{$f[$f_]['movieid']}"></span></p></div></div></div></div></div>
 EOT;
 		}			
 		echo "</div>";
@@ -151,7 +148,6 @@ EOT;
 		$command .= " 2>&1";
 
 		$output = shell_exec($command);
-		print($output);
 		if($output[0] == "[" && !empty($output)) {
 			$filtered = explode("], [", substr($output, 2, -3));
 
@@ -167,6 +163,40 @@ EOT;
 			$predictions = 0;
 		}
 		return $predictions;
+	}
+
+	function get_recommendations() {
+		$usrid = (!empty($_SESSION["usrid"]))? $_SESSION["usrid"] : null;
+		if(isset($usrid)) {
+			$recommendations = recommend();
+			if(!empty($recommendations)) {
+				$r_s = array();
+				foreach($recommendations as $recommendation) {$r_s[] = $recommendation[0];}
+				$dbel = new DBel();
+				
+				$r = $dbel->q_with_array("SELECT * FROM films WHERE movieid IN ", $r_s, "movieid");
+			} else { echo "Start by rating films you have watched.";}
+
+			return $r;
+		}
+	}
+
+	function startsWith($h, $n) {
+		return (strcasecmp(substr($h, 0, strlen($n)), $n));
+	}
+
+	function isort($array, $q) {
+		//function to sort search and autocomplete results
+		$_1 = array();
+		$_2 = array();
+		foreach($array as $member) {
+			if(startsWith($member, $q) == 0) {
+				array_push($_1, $member);
+			} else {
+				array_push($_2, $member);
+			}
+		}
+		return array_merge($_1, $_2);
 	}
 
 ?>
