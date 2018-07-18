@@ -6,6 +6,14 @@ function sr(b, c){
 	    'Content-Type': 'application/json'
 	  },
 	  credentials: 'include',
-	  body: JSON.stringify({fid: b.substr(4), r: c})
+	  body: JSON.stringify({type:"rate", fid: b.substr(4), r: c})
 	});
 }
+
+window.onload = function (){            
+	var el = document.querySelector("#hsubmit");
+	var field = document.querySelector("#q");
+	el.onclick = function(){
+		if(field.value.replace(/\s/g,'') == ""||field.value == null) return false;
+	}; 
+};

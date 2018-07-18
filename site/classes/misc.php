@@ -112,6 +112,11 @@ EOT;
 		    $fid = $f[$f_]["movieid"];
 		    $original = "";
 
+		    $clr = "";
+		    if(!empty($usrid) && (in_array($fid, array_keys($usr_stars)))) {
+		    	$clr = '<center><form action="rate.php" method="POST"><input name="type" value="clr" hidden><input name="fid" value="' . $f[$f_]['movieid'] .'" hidden><input type="submit" class="clr" value="Clear"></form></center>';
+			}
+
 			if($f[$f_]['originalTitle'] != $f[$f_]['primaryTitle']) {
 				$original = '<br>(' . $f[$f_]['originalTitle'] . ')';
 			}
@@ -123,7 +128,7 @@ EOT;
 
 
 			echo <<<EOT
-<div id="ffi"><div class="ffi_container"><img src="img/posters/{$f[$f_]["imdbID"]}.jpg" class="ffi_image"><div class="overlay overlayFade"><div class="text"><div class="filmtitle">{$f[$f_]['primaryTitle']}{$original}</div><div class="title">{$f[$f_]['startYear']} {$genres[$fid]}</div><div class="title"><p><span class="stars" title="{$title}"><span style="width: {$width}px;"></span></span></p></div><div class="user-rating"><span class="t">Your Rating:</span><p><span class="c-rating" name="ffi-{$f[$f_]['movieid']}"></span></p></div></div></div></div></div>
+<div id="ffi"><div class="ffi_container"><img src="img/posters/{$f[$f_]["imdbID"]}.jpg" class="ffi_image"><div class="overlay overlayFade"><div class="text"><div class="filmtitle">{$f[$f_]['primaryTitle']}{$original}</div><div class="title">{$f[$f_]['startYear']} {$genres[$fid]}</div><div class="title"><p><span class="stars" title="{$title}"><span style="width: {$width}px;"></span></span></p></div><div class="user-rating"><span class="t">Your Rating:</span><span class="c-rating" name="ffi-{$f[$f_]['movieid']}"></span>{$clr}</div></div></div></div></div>
 EOT;
 		}			
 		echo "</div>";
@@ -152,8 +157,6 @@ EOT;
 			$filtered = explode("], [", substr($output, 2, -3));
 
 			$predictions = array();
-
-			print_r($filtered);
 
 			foreach($filtered as $fi) {
 				$pr = explode(",", $fi);
