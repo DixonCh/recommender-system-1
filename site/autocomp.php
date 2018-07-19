@@ -8,13 +8,13 @@
 
 		$q = "%" . $_POST["q"] . "%";
 
-		$sql = $dbel->q("SELECT `primaryTitle`, `startYear` FROM `films` WHERE `primaryTitle` LIKE :needle",1, array(":needle" => $q));
+		$sql = $dbel->q("SELECT `primaryTitle` FROM `films` WHERE `primaryTitle` LIKE :needle",1, array(":needle" => $q));
 
 		$list = array();
 
 		if (!empty($sql)) {
 		    foreach($sql as $row) {
-		    	$list[] = $row["primaryTitle"] . " (" . $row["startYear"] . ")";
+		    	$list[] = $row["primaryTitle"];
 		    }
 		}
 
