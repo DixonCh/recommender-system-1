@@ -10,7 +10,7 @@
 		$films = $dbel->q("SELECT * FROM user_ratings JOIN films ON user_ratings.movieid = films.movieid WHERE userid = :usr ORDER BY films.movieid", 1, array(":usr" => $usrid));
 		if(!empty($films)) {
 			$user_ratings = prepareFilmList($films);
-			// $r = get_recommendations();
+			$r = get_recommendations();
 		} else {
 			echo 'You haven\'t rated any movie yet.';
 		}
