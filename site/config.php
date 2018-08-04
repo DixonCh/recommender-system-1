@@ -1,5 +1,4 @@
 <?php
-
 	define ("A", "localhost");
 	define ("B", "root");
 	define ("C", "");
